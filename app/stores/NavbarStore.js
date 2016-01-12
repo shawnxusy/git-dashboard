@@ -1,5 +1,3 @@
-/* jshint esnext:true */
-
 import alt from '../alt';
 import NavbarActions from '../actions/NavbarActions';
 

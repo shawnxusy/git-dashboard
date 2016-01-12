@@ -1,4 +1,6 @@
-# git-dashboard
-App for devs to import Github and use as a task management system. Also able to view the repos they are following with graphs
+# New Eden Faces (React)
 
-Recevied help from tutorial: http://sahatyalkabov.com/create-a-character-voting-app-using-react-nodejs-mongodb-and-socketio/
+**Source code** for [
+Create a character voting app using React, Node.js, MongoDB and Socket.IO](http://sahatyalkabov.com/create-a-character-voting-app-using-react-nodejs-mongodb-and-socketio/).
+
+![](https://lh3.googleusercontent.com/bTN84YkcbO_gXZm4qOrOYVTwUgwkOsrFfv8nrUe7aew=w2080-h1470-no)

@@ -1,5 +1,3 @@
-/* jshint esnext:true */
-
 import alt from '../alt';
 import FooterActions from '../actions/FooterActions';
 
@@ -14,7 +12,6 @@ class FooterStore {
   }
 
   onGetTopCharactersFail(jqXhr) {
-    // Handle multiple response formats, fallback to HTTP status code number.
     toastr.error(jqXhr.responseJSON && jqXhr.responseJSON.message || jqXhr.responseText || jqXhr.statusText);
   }
 }

@@ -1,5 +1,3 @@
-/* jshint esnext:true */
-
 import alt from '../alt';
 import AddCharacterActions from '../actions/AddCharacterActions';
 

@@ -1,8 +1,6 @@
-/* jshint esnext:true */
-
 import React from 'react';
-import Footer from './Footer';
 import Navbar from './Navbar';
+import Footer from './Footer';
 
 class App extends React.Component {
   render() {
