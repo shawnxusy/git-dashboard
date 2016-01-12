@@ -1,3 +1,5 @@
+/* jshint esnext:true */
+
 import React from 'react';
 import {Link} from 'react-router';
 import NavbarStore from '../stores/NavbarStore';
@@ -10,7 +12,7 @@ class Navbar extends React.Component {
     this.onChange = this.onChange.bind(this);
   }
 
-  componentDidMount() {
+  componentDidMount() {    
     NavbarStore.listen(this.onChange);
     NavbarActions.getCharacterCount();
 
@@ -208,6 +210,7 @@ class Navbar extends React.Component {
               </ul>
             </li>
             <li><Link to='/add'>Add</Link></li>
+            <li><Link to='/profile'>Profile</Link></li>
           </ul>
         </div>
       </nav>
