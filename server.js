@@ -16,6 +16,7 @@ var ReactDOM = require('react-dom/server');
 var Router = require('react-router');
 var swig  = require('swig');
 var xml2js = require('xml2js');
+var jsonParser = require('json-parser');
 var _ = require('underscore');
 
 var config = require('./config');
@@ -36,6 +37,33 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(favicon(path.join(__dirname, 'public', 'favicon.png')));
 app.use(express.static(path.join(__dirname, 'public')));
+
+/**
+ * GET /api/repos
+ * Returns a list of repos for user name
+ */
+app.get('/api/repos/:username', function(req, res, next) {
+  var username = req.params.username;
+  var reposLookupPack = {
+    url: 'https://api.github.com/users/' + username + '/repos',
+    headers: {
+      'User-Agent': 'S.X Dashboard'
+    }
+  };
+
+  request.get(reposLookupPack, function(err, request, json) {
+    if (err) return next(err);
+
+    var repos = [];
+    var result = jsonParser.parse(json);
+
+    _.each(result, function(repo) {
+      repos.push(repo);
+    });
+
+    res.send(repos);
+  });
+});
 
 /**
  * GET /api/characters
@@ -362,7 +390,7 @@ app.get('/api/stats', function(req, res, next) {
             if (err) return next(err);
 
             var raceCount = _.countBy(characters, function(character) { return character.race; });
-            var max = _.max(raceCount, function(race) { return race });
+            var max = _.max(raceCount, function(race) { return race; });
             var inverted = _.invert(raceCount);
             var topRace = inverted[max];
             var topCount = raceCount[topRace];
@@ -380,7 +408,7 @@ app.get('/api/stats', function(req, res, next) {
             if (err) return next(err);
 
             var bloodlineCount = _.countBy(characters, function(character) { return character.bloodline; });
-            var max = _.max(bloodlineCount, function(bloodline) { return bloodline });
+            var max = _.max(bloodlineCount, function(bloodline) { return bloodline; });
             var inverted = _.invert(bloodlineCount);
             var topBloodline = inverted[max];
             var topCount = bloodlineCount[topBloodline];
@@ -439,15 +467,15 @@ app.post('/api/report', function(req, res, next) {
 app.use(function(req, res) {
   Router.match({ routes: routes.default, location: req.url }, function(err, redirectLocation, renderProps) {
     if (err) {
-      res.status(500).send(err.message)
+      res.status(500).send(err.message);
     } else if (redirectLocation) {
-      res.status(302).redirect(redirectLocation.pathname + redirectLocation.search)
+      res.status(302).redirect(redirectLocation.pathname + redirectLocation.search);
     } else if (renderProps) {
         var html = ReactDOM.renderToString(React.createElement(Router.RoutingContext, renderProps));
         var page = swig.renderFile('views/index.html', { html: html });
         res.status(200).send(page);
     } else {
-      res.status(404).send('Page Not Found')
+      res.status(404).send('Page Not Found');
     }
   });
 });

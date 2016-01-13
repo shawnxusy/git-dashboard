@@ -4,6 +4,7 @@ import React from 'react';
 import {Link} from 'react-router';
 import ProfileStore from '../stores/ProfileStore';
 import ProfileActions from '../actions/ProfileActions';
+import FollowedRepoList from './follow/FollowedRepoList';
 
 class Profile extends React.Component {
   constructor(props) {
@@ -28,6 +29,12 @@ class Profile extends React.Component {
     return (
       <div className='container'>
         <h3 className='text-center'>Entering profile page!</h3>
+        <div className="col-xs-6">
+          <FollowedRepoList />
+        </div>
+        <div className="col-xs-6">
+          {this.props.children}
+        </div>
       </div>
     );
   }
