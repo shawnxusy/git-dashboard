@@ -20,7 +20,7 @@ export default (
     <Route path='/add' component={AddCharacter} />
     <Route path='/profile' component={Profile} >
       <IndexRoute component={RepoList} />
-      <Route path='repo/:id' component={Repo} />
+      <Route path='repo/:name' component={Repo} />
     </Route>
     <Route path=':category' component={CharacterList}>
       <Route path=':race' component={CharacterList}>

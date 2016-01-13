@@ -39,6 +39,30 @@ app.use(favicon(path.join(__dirname, 'public', 'favicon.png')));
 app.use(express.static(path.join(__dirname, 'public')));
 
 /**
+ * GET /api/repo/:repoId
+ * Returns detail of a repo
+ */
+app.get('/api/repo/:repoName', function(req, res, next) {
+  var repoName = req.params.repoName;
+  var repoLookupPack = {
+    url: 'https://api.github.com/repos/shawnxusy/' + repoName,
+    headers: {
+      'User-Agent': 'S.X Dashboard'
+    }
+  };
+
+  request.get(repoLookupPack, function(err, request, json) {
+    if (err) return next(err);
+
+    var repos = [];
+    var result = jsonParser.parse(json);
+
+    res.send(result);
+  });
+});
+
+
+/**
  * GET /api/repos
  * Returns a list of repos for user name
  */

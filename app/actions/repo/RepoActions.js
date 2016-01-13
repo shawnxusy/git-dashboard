@@ -9,15 +9,14 @@ class RepoActions {
     );
   }
 
-  getRepo() {
-    console.log("TODO: get repo!");
-    // $.ajax({ url: '/api/repos/shawnxusy' })
-    //   .done(data => {
-    //     this.actions.getReposSuccess(data);
-    //   })
-    //   .fail(jqXhr => {
-    //     this.actions.getReposFail(data);
-    //   });
+  getRepo(repoName) {
+    $.ajax({ url: '/api/repo/' + repoName })
+      .done(data => {
+        this.actions.getRepoSuccess(data);
+      })
+      .fail(jqXhr => {
+        this.actions.getRepoFail(data);
+      });
   }
 
 }

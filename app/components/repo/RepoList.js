@@ -29,7 +29,9 @@ class RepoList extends React.Component {
     var repoNodes = this.state.repos.map((repo, index) => {
       return (
         <div key={repo.id}>
-          <div>{repo.name}</div>
+          <Link to={'/profile/repo/' + repo.name}>
+            <div>{repo.name}</div>
+          </Link>
         </div>
       );
     });

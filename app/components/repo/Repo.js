@@ -14,7 +14,7 @@ class Repo extends React.Component {
 
   componentDidMount() {
     RepoStore.listen(this.onChange);
-    RepoActions.getRepo();
+    RepoActions.getRepo(this.props.params.name);
   }
 
   componentWillUnmount() {
@@ -27,8 +27,11 @@ class Repo extends React.Component {
 
   render() {
     return (
-      <div className='container'>
+      <div>
         <h3 className='text-center'>This is showing a single repo!</h3>
+        <div>
+          {this.state.repo.id} - {this.state.repo.name}
+        </div>
       </div>
     );
   }
