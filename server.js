@@ -32,6 +32,8 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(favicon(path.join(__dirname, 'public', 'favicon.png')));
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(passport.initialize());
+
 
 // Bootstrap routes
 require('./server/routes')(app, passport);

@@ -1,4 +1,5 @@
 var GitHubStrategy = require('passport-github2').Strategy;
+var User = require('./models/user');
 
 module.exports = function(app, passport, config) {
   // Passport session setup.
@@ -47,7 +48,7 @@ module.exports = function(app, passport, config) {
               done(err, user);
             });
           }
-        })
+        });
 
         // To keep the example simple, the user's GitHub profile is returned to
         // represent the logged-in user.  In a typical application, you would want
