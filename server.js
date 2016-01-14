@@ -7,21 +7,16 @@ var bodyParser = require('body-parser');
 var compression = require('compression');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
-var async = require('async');
 var colors = require('colors');
 var mongoose = require('mongoose');
-var request = require('request');
 var React = require('react');
 var ReactDOM = require('react-dom/server');
 var Router = require('react-router');
 var swig  = require('swig');
-var xml2js = require('xml2js');
-var jsonParser = require('json-parser');
-var _ = require('underscore');
+var passport = require('passport');
 
-var config = require('./config');
+var config = require('./server/config');
 var routes = require('./app/routes');
-var Character = require('./models/character');
 
 var app = express();
 
@@ -39,7 +34,10 @@ app.use(favicon(path.join(__dirname, 'public', 'favicon.png')));
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Bootstrap routes
-require('./server/routes')(app);
+require('./server/routes')(app, passport);
+
+// Bootstrap passport
+require('./server/passport')(app, passport, config);
 
 app.use(function(req, res) {
   Router.match({ routes: routes.default, location: req.url }, function(err, redirectLocation, renderProps) {

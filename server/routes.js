@@ -1,28 +1,40 @@
 // Babel ES6/JSX Compiler
 require('babel-register');
 
-var path = require('path');
-var express = require('express');
-var bodyParser = require('body-parser');
-var compression = require('compression');
-var favicon = require('serve-favicon');
-var logger = require('morgan');
 var async = require('async');
-var colors = require('colors');
-var mongoose = require('mongoose');
 var request = require('request');
-var React = require('react');
-var ReactDOM = require('react-dom/server');
-var Router = require('react-router');
-var swig  = require('swig');
 var xml2js = require('xml2js');
 var jsonParser = require('json-parser');
 var _ = require('underscore');
 
-var routes = require('../app/routes');
-var Character = require('../models/character');
+var Character = require('./models/character');
 
-module.exports = function(app) {
+module.exports = function(app, passport) {
+
+  // GET /auth/github
+  //   Use passport.authenticate() as route middleware to authenticate the
+  //   request.  The first step in GitHub authentication will involve redirecting
+  //   the user to github.com.  After authorization, GitHub will redirect the user
+  //   back to this application at /auth/github/callback
+  app.get('/auth/github',
+    passport.authenticate('github', { scope: [ 'user:email' ] }),
+    function(req, res){
+      // The request will be redirected to GitHub for authentication, so this
+      // function will not be called.
+    });
+
+  // GET /auth/github/callback
+  //   Use passport.authenticate() as route middleware to authenticate the
+  //   request.  If authentication fails, the user will be redirected back to the
+  //   login page.  Otherwise, the primary route function will be called,
+  //   which, in this example, will redirect the user to the home page.
+  app.get('/auth/github/callback',
+    passport.authenticate('github', { failureRedirect: '/login' }),
+    function(req, res) {
+      res.redirect('/');
+    });
+
+
   /**
    * GET /api/repo/:repoId
    * Returns detail of a repo
