@@ -6,6 +6,7 @@ var request = require('request');
 var xml2js = require('xml2js');
 var jsonParser = require('json-parser');
 var _ = require('underscore');
+var $ = require('jquery');
 
 var Character = require('./models/character');
 
@@ -33,6 +34,14 @@ module.exports = function(app, passport) {
     function(req, res) {
       res.redirect('/');
     });
+
+  /**
+   * Whether a user is logged in or not
+   */
+
+  app.get('/api/loggedIn', function(req, res, next) {
+    res.send(req.isAuthenticated());
+  })
 
 
   /**
@@ -484,4 +493,5 @@ module.exports = function(app, passport) {
       });
     });
   });
+
 }

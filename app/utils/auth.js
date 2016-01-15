@@ -1,15 +1,19 @@
-/* jshint esnext:true */
-/*
-import React from 'react';
-import UserStore from '../stores/UserStore';
+/* jshint esnext: true */
 
-const requireAuth = (Component) => {
-  return class Authenticated extends React.Component {
-    render() {
-      return <Component {...this.props}/>;
-    }
-  };
+const auth = {
+  loggedIn: () => {
+    var promise = new Promise(function(resolve, reject) {
+      $.ajax({ url: '/api/loggedIn' })
+        .done(loggedIn => {
+          resolve(loggedIn);
+        })
+        .fail(jqXhr => {
+          console.log("Getting login status failed");
+          reject(jqXhr);
+        });
+    })
+    return promise;
+  }
 };
 
-export default requireAuth;
-*/
+export default auth;

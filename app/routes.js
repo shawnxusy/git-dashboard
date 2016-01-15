@@ -2,6 +2,7 @@
 
 import React from 'react';
 import {Route, IndexRoute} from 'react-router';
+import alt from './alt';
 import App from './components/App';
 import Home from './components/Home';
 import Stats from './components/Stats';
@@ -13,11 +14,19 @@ import RepoList from './components/repo/RepoList';
 import Repo from './components/repo/Repo';
 import Login from './components/Login';
 import UserStore from './stores/UserStore';
+import auth from './utils/auth';
 
-function requireAuth(nextState, replaceState) {
-  if (!UserStore.getState().user.authenticated) {
-    replaceState({ nextPathname: nextState.location.pathname }, '/login');
-  }
+function requireAuth(nextState, replaceState, callback) {
+  // console.log("state: ", this.state)
+  // $.ajax({ url: '/api/loggedIn' })
+  //   .done(loggedIn => {
+  //     if (!loggedIn) replaceState({ nextPathname: nextState.location.pathname }, '/login');
+  //     callback();
+  //   })
+  auth.loggedIn().then(function(loggedIn) {
+    if (!loggedIn) replaceState({ nextPathname: nextState.location.pathname }, '/login');
+    callback();
+  })
 }
 
 export default (

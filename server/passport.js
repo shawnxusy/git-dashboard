@@ -10,13 +10,13 @@ module.exports = function(app, passport, config) {
   //   have a database of user records, the complete GitHub profile is serialized
   //   and deserialized.
   passport.serializeUser(function(user, done) {
-    console.log('serialize');
+    console.log('serialized, user id is: ', user.userId);
     done(null, user.userId);
   });
 
   passport.deserializeUser(function(id, done) {
     console.log('deserializeUser');
-    User.findById(id, function(err, user) {
+    User.findOne({ userId: id}, function(err, user) {
       done(err, user);
     });
   });
@@ -50,11 +50,6 @@ module.exports = function(app, passport, config) {
           }
         });
 
-        // To keep the example simple, the user's GitHub profile is returned to
-        // represent the logged-in user.  In a typical application, you would want
-        // to associate the GitHub account with a user record in your database,
-        // and return that user instead.
-        //return done(null, profile);
     }
   ));
 };

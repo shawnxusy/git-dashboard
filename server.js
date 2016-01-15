@@ -5,6 +5,7 @@ var path = require('path');
 var express = require('express');
 var bodyParser = require('body-parser');
 var compression = require('compression');
+var session = require('express-session');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
 var colors = require('colors');
@@ -30,10 +31,11 @@ app.use(compression());
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use(session({ secret: 'keyboard crazy', resave: false, saveUninitialized: false }));
 app.use(favicon(path.join(__dirname, 'public', 'favicon.png')));
-app.use(express.static(path.join(__dirname, 'public')));
 app.use(passport.initialize());
-
+app.use(passport.session());
+app.use(express.static(path.join(__dirname, 'public')));
 
 // Bootstrap routes
 require('./server/routes')(app, passport);

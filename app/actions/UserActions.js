@@ -9,8 +9,17 @@ import alt from '../alt';
  * UserActions.prototype.create() = function(data) {}
  */
 class UserActions {
+  constructor() {
+    this.generateActions(
+      'getLoginSuccess',
+      'getLoginFail',
+      'getLogoutSuccess',
+      'getLogoutFail'
+    );
+  }
 
   loginsuccess(email) {
+    console.log(email);
     this.dispatch(email);
   }
 

@@ -41,15 +41,7 @@ class UserStore {
     this.on('init', this.bootstrap);
     this.on('bootstrap', this.bootstrap);
 
-    // (listenersMap: object): undefined
-    // bindListeners accepts an object where the keys correspond to the method in your
-    // StoreModel and the values can either be an array of action symbols or a single action symbol.
-    // Remember: alt generates uppercase constants for us to reference
-    this.bindListeners({
-      handleLoginSuccess: UserActions.LOGINSUCCESS,
-      handleLogoutAttempt: UserActions.LOGOUT,
-      handleLogoutSuccess: UserActions.LOGOUTSUCCESS
-    });
+    this.bindActions(UserActions);
   }
 
   bootstrap() {
@@ -57,16 +49,18 @@ class UserStore {
   }
 
   handleLoginAttempt() {
+    console.log('UserStore.js: handleLoginAttempt');
     this.user = this.user.set('isWaiting', true);
     this.emitChange();
   }
 
-  handleLoginSuccess() {
+  onLoginSuccess() {
+    console.log('UserStore.js: onLoginSuccess');
     this.user = this.user.merge({ isWaiting: false, authenticated: true });
     this.emitChange();
   }
 
-  handleLogoutAttempt() {
+  onLogoutAttempt() {
     this.user = this.user.set('isWaiting', true);
     this.emitChange();
   }
